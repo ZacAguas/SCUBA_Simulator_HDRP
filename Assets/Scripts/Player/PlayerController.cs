@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
         float targetNormalisedVolume = normalisedCurrentBCDVolume + input * inflateSpeed * Time.fixedDeltaTime; // target is unbound ie. may be outside range 0-1
         normalisedCurrentBCDVolume = Mathf.Clamp01(targetNormalisedVolume); // ensures value is normalised
-        // Debug.Log(normalisedCurrentBCDVolume.ToString("0.0"));
     }
     
     private void ApplyForces()
