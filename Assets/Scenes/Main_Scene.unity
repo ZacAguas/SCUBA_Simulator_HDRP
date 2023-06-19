@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2159.3303, g: 2262.647, b: 3284.2036, a: 1}
+  m_IndirectSpecularColor: {r: 2159.268, g: 2262.6233, b: 3284.09, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -675,7 +675,7 @@ MonoBehaviour:
   tessellationFactorFadeRange: 1850
   refractionColor: {r: 0.11449803, g: 0.2924528, b: 0.2924528, a: 1}
   maxRefractionDistance: 0.5
-  absorptionDistance: 50
+  absorptionDistance: 10
   scatteringColor: {r: 0, g: 0.4, b: 0.4, a: 1}
   ambientScattering: 0.2
   heightScattering: 0.2
@@ -703,12 +703,12 @@ MonoBehaviour:
   volumeDepth: 50
   volumeHeight: 0
   volumePrority: 0
-  absorptionDistanceMultiplier: 1
+  absorptionDistanceMultiplier: 5
   colorPyramidOffset: 1
   underWaterAmbientProbeContribution: 1
   underWaterScatteringColorMode: 0
   underWaterScatteringColor: {r: 0, g: 0.27, b: 0.23, a: 1}
-  underWaterRefraction: 0
+  underWaterRefraction: 1
   largeCurrentSpeedValue: 0
   largeCurrentMap: {fileID: 0}
   largeCurrentRegionExtent: {x: 100, y: 100}
@@ -723,7 +723,7 @@ MonoBehaviour:
   deformationRes: 512
   deformationAreaSize: {x: 200, y: 200}
   deformationAreaOffset: {x: 0, y: 0}
-  foam: 1
+  foam: 0
   foamResolution: 512
   foamAreaSize: {x: 200, y: 200}
   foamAreaOffset: {x: 0, y: 0}
