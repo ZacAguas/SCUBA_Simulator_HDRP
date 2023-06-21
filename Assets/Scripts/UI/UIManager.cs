@@ -12,10 +12,27 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] private Slider bcdSlider;
     [SerializeField] private TextMeshProUGUI depthLabel;
+    [SerializeField] private TextMeshProUGUI ascentLabel;
+    
 
     private void FixedUpdate()
     {
         bcdSlider.value = playerController.GetNormalisedCurrentBCDVolume();
         depthLabel.text = "Depth: " + depthManager.Depth.ToString("000.00") + "m";
+
+
+        float currentAscentRate = depthManager.CurrentAscentRate;
+        float maxAscentRate = depthManager.MaxAscentRate;
+        ascentLabel.color = Color.white;
+
+        if (currentAscentRate < 0) // descending
+            ascentLabel.text = "DESC: " + Mathf.Abs(currentAscentRate).ToString("000.0" + "m/min");
+        else // ascending
+        {
+            if (currentAscentRate > maxAscentRate) // ascending too quickly
+                ascentLabel.color = Color.red;
+            ascentLabel.text = "ASCN: " + currentAscentRate.ToString("000.0" + "m/min");
+
+        }
     }
 }

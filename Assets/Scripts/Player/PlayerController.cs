@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private float normalisedCurrentBCDVolume; // 0 = fully deflated, 1 = fully inflated
     public float GetNormalisedCurrentBCDVolume() => normalisedCurrentBCDVolume;
-    
+    public float GetYVelocity() => rb.velocity.y;
     public float CurrentBCDVolume
     {
         get

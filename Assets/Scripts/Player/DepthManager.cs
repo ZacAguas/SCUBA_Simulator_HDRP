@@ -8,14 +8,22 @@ using UnityEngine;
 public class DepthManager : MonoBehaviour
 {
     private TankController tankController;
+    private PlayerController playerController;
     
     public float Depth { get; private set; }
     public float PressureAbsolute => (Depth + 10) / 10; // absolute atmospheric pressure ie. 1ATA at 0m, 2ATA at 10m
+
+    
+    [field: SerializeField] public float MaxAscentRate { get; private set; } // the max speed the player should ascend at (normally 9/16 m/min)
+    public float CurrentAscentRate { get; private set; } // in m/min, positive if ascending, negative if descending
+    
+    
 
     private float prevDepth;
     private bool playerNarced = false;
     
     [SerializeField] private GameEvent onBecomeNarced; // triggered when player reaches certain depth determined by narcosisStartDepth
+    [SerializeField] private GameEvent onEndNarced; // triggered when player reaches certain depth determined by narcosisStartDepth
 
     [SerializeField] private Transform seaLevel;
     [SerializeField] private float narcosisAirThreshold; // the depth at which narcosis starts (FOR AIR)
@@ -24,6 +32,7 @@ public class DepthManager : MonoBehaviour
     private void Awake()
     {
         tankController = GetComponent<TankController>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -40,6 +49,7 @@ public class DepthManager : MonoBehaviour
     {
         CalculateDepth();
         CalculateEquivalentNarcoticDepth();
+        CalculateAscentRate();
         CheckNarcosis();
 
 
@@ -64,8 +74,18 @@ public class DepthManager : MonoBehaviour
             equivalentNarcoticDepth = Depth;
     }
 
+    private void CalculateAscentRate()
+    {
+        CurrentAscentRate = playerController.GetYVelocity() * 60; // * 60 because ascent rate is in m/min not m/s
+    }
+    
+
     private void CheckNarcosis()
     {
+        // onBecomeNarced event causes FX to enable
+        // 
+        
+        
         if (equivalentNarcoticDepth >= narcosisAirThreshold) // raise narced event if past threshold and not already narced
         {
             if (!playerNarced) // only invoke if not already narced
