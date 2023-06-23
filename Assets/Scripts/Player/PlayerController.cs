@@ -11,12 +11,10 @@ public class PlayerController : MonoBehaviour
     private DepthManager depthManager;
     private Rigidbody rb;
     
-    // water system
-    [SerializeField] private WaterSurface targetSurface;
-    private WaterSearchParameters searchParameters = new WaterSearchParameters();
-    private WaterSearchResult searchResult = new WaterSearchResult();
-
-
+    // water surface
+    [SerializeField] private Transform surfaceAbovePlayer;
+    [SerializeField] private float surfaceDownForce;
+    
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private bool clampVerticalLook;
     [SerializeField] private float swimSpeed;
@@ -110,7 +108,10 @@ public class PlayerController : MonoBehaviour
 
     private void ClampToSurface()
     {
-        
+        if (transform.position.y >= surfaceAbovePlayer.transform.position.y) // player is at or above surface
+        {
+            rb.AddForce(Vector3.down * surfaceDownForce);
+        }
     }
 
     private void SwimMovement()
