@@ -25,7 +25,7 @@ public class DepthManager : MonoBehaviour
     [SerializeField] private GameEvent onBecomeNarced; // triggered when player reaches certain depth determined by narcosisStartDepth
     [SerializeField] private GameEvent onEndNarced; // triggered when player reaches certain depth determined by narcosisStartDepth
 
-    [SerializeField] private Transform seaLevel;
+    [SerializeField] private Transform seaLevel; // used for calculating depth
     [SerializeField] private float narcosisAirThreshold; // the depth at which narcosis starts (FOR AIR)
     private float equivalentNarcoticDepth; // estimate depth at which gas mixture produces equivalent narcotic effect to air
 
@@ -42,8 +42,6 @@ public class DepthManager : MonoBehaviour
         playerNarced = false;
 
         CalculateEquivalentNarcoticDepth(); // careful with script execution order (percentages must be calculated in tank controller before this)
-        
-        Debug.Log("Start depth: " + Depth);
     }
     private void FixedUpdate() // for physics calculations
     {
@@ -63,7 +61,7 @@ public class DepthManager : MonoBehaviour
 
     private void CalculateDepth()
     {
-        Depth = seaLevel.position.y - transform.position.y;
+        Depth = Mathf.Max(0, seaLevel.position.y - transform.position.y);
     }
 
     private void CalculateEquivalentNarcoticDepth()
@@ -82,10 +80,6 @@ public class DepthManager : MonoBehaviour
 
     private void CheckNarcosis()
     {
-        // onBecomeNarced event causes FX to enable
-        // 
-        
-        
         if (equivalentNarcoticDepth >= narcosisAirThreshold) // raise narced event if past threshold and not already narced
         {
             if (!playerNarced) // only invoke if not already narced

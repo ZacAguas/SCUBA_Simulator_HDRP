@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bcdSlider.value = playerController.GetNormalisedCurrentBCDVolume();
+        bcdSlider.value = playerController.GetInflationMultiplier();
         depthLabel.text = "Depth: " + depthManager.Depth.ToString("000.00") + "m";
 
 

@@ -317,15 +317,15 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 11.373292
+    m_Value: 7.3732915
   compensation:
     m_OverrideState: 0
     m_Value: 0
   limitMin:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 2
   limitMax:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 14
   curveMap:
     m_OverrideState: 0

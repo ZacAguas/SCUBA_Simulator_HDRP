@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2025.0891, g: 1990.7542, b: 2396.7075, a: 1}
+  m_IndirectSpecularColor: {r: 2156.596, g: 2260.264, b: 3282.559, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -558,6 +558,52 @@ Transform:
   - {fileID: 1616404505}
   m_Father: {fileID: 1162150586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &300016540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300016541}
+  - component: {fileID: 300016542}
+  m_Layer: 0
+  m_Name: Exact Sea Level
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &300016541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300016540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.077197045, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1986588037}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &300016542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300016540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8541ba6aab44d42bceedb07c2e90e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSurface: {fileID: 525020238}
+  player: {fileID: 1162150586}
 --- !u!1 &432432459
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +615,7 @@ GameObject:
   - component: {fileID: 432432461}
   - component: {fileID: 432432460}
   m_Layer: 0
-  m_Name: Sky and Fog Volume
+  m_Name: Sky and Fog and Water Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -662,7 +708,7 @@ MonoBehaviour:
   meshRenderers: []
   timeMultiplier: 1
   cpuSimulation: 1
-  cpuFullResolution: 0
+  cpuFullResolution: 1
   cpuEvaluateRipples: 0
   customMaterial: {fileID: 0}
   startSmoothness: 0.95
@@ -860,7 +906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 637989116}
   m_Layer: 0
-  m_Name: Sea Level
+  m_Name: Approx Sea Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1181,6 +1227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3a5e80d2824483a9b3b36d1f407435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetSurface: {fileID: 525020238}
   mouseSensitivity: 500
   clampVerticalLook: 0
   swimSpeed: 1000
@@ -1252,7 +1299,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 77
   m_Drag: 5
-  m_AngularDrag: 0
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1395,7 +1442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 600, y: 200}
+  m_AnchoredPosition: {x: 543.6, y: 200}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1202348566
@@ -1725,7 +1772,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 571.4, y: 267.89}
-  m_SizeDelta: {x: 285.3, y: 50}
+  m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1599259924
 MonoBehaviour:
@@ -2113,6 +2160,7 @@ Transform:
   - {fileID: 157207114}
   - {fileID: 432432461}
   - {fileID: 525020237}
+  - {fileID: 300016541}
   - {fileID: 637989116}
   - {fileID: 528689636}
   - {fileID: 1309678441}

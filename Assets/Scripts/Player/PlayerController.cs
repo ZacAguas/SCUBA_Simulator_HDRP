@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 [RequireComponent(typeof(DepthManager))]
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,11 @@ public class PlayerController : MonoBehaviour
     private InputManager inputManager;
     private DepthManager depthManager;
     private Rigidbody rb;
+    
+    // water system
+    [SerializeField] private WaterSurface targetSurface;
+    private WaterSearchParameters searchParameters = new WaterSearchParameters();
+    private WaterSearchResult searchResult = new WaterSearchResult();
 
 
     [SerializeField] private float mouseSensitivity;
@@ -27,20 +33,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSurfaceBCDVolume; // in m^3
     [SerializeField] private float inflateSpeed;
 
-    private float normalisedCurrentBCDVolume; // 0 = fully deflated, 1 = fully inflated
-    public float GetNormalisedCurrentBCDVolume() => normalisedCurrentBCDVolume;
+    private float inflationMultiplier; // 0 = fully deflated, 1 = fully inflated
+    public float GetInflationMultiplier() => inflationMultiplier;
     public float GetYVelocity() => rb.velocity.y;
     public float CurrentBCDVolume
     {
         get
         {
-            float volumeAtCurrentPressure = depthManager.GetVolumeAtPressureATA(normalisedCurrentBCDVolume * maxSurfaceBCDVolume); // the current volume of the BCD at this depth/pressure
+            float volumeAtCurrentPressure = depthManager.GetVolumeAtPressureATA(inflationMultiplier * maxSurfaceBCDVolume); // the current volume of the BCD at this depth/pressure
             float maxVolumeAtCurrentPressure = depthManager.GetVolumeAtPressureATA(maxSurfaceBCDVolume); // the volume if the BCD is fully inflated at this pressure
             return Mathf.Min(volumeAtCurrentPressure, maxVolumeAtCurrentPressure); // ensures volume doesn't go over maximum
         }
     }
-
-    private float currentBCDVolume; // backing field, don't use
 
     private float yMouseRotation;
     private float xMouseRotation;
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
         rb.mass = bodyMass;
         bodyVolume = CalculateBodyVolume();
-        normalisedCurrentBCDVolume = 1; // start fully inflated
+        inflationMultiplier = 1; // start fully inflated
         Debug.Log("Body volume: " + bodyVolume);
     }
 
@@ -71,6 +75,7 @@ public class PlayerController : MonoBehaviour
     {
         SwimMovement();
         AdjustBCD();
+        ClampToSurface();
         ApplyForces();
     }
 
@@ -91,8 +96,8 @@ public class PlayerController : MonoBehaviour
     {
         float input = inputManager.GetBCDInput();
 
-        float targetNormalisedVolume = normalisedCurrentBCDVolume + input * inflateSpeed * Time.fixedDeltaTime; // target is unbound ie. may be outside range 0-1
-        normalisedCurrentBCDVolume = Mathf.Clamp01(targetNormalisedVolume); // ensures value is normalised
+        float targetNormalisedVolume = inflationMultiplier + input * inflateSpeed * Time.fixedDeltaTime; // target is unbound ie. may be outside range 0-1
+        inflationMultiplier = Mathf.Clamp01(targetNormalisedVolume); // ensures value is normalised
     }
     
     private void ApplyForces()
@@ -101,6 +106,11 @@ public class PlayerController : MonoBehaviour
         float buoyantForce = waterDensity * totalVolume * gravity;
 
         rb.AddForce(Vector3.up * (buoyantForce - (totalMass * gravity))); // buoyant force acting upwards, weight acting downwards
+    }
+
+    private void ClampToSurface()
+    {
+        
     }
 
     private void SwimMovement()
