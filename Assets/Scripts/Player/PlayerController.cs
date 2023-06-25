@@ -11,10 +11,6 @@ public class PlayerController : MonoBehaviour
     private DepthManager depthManager;
     private Rigidbody rb;
     
-    // water surface
-    [SerializeField] private Transform surfaceAbovePlayer;
-    [SerializeField] private float surfaceDownForce;
-    
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private bool clampVerticalLook;
     [SerializeField] private float swimSpeed;
@@ -73,7 +69,6 @@ public class PlayerController : MonoBehaviour
     {
         SwimMovement();
         AdjustBCD();
-        ClampToSurface();
         ApplyForces();
     }
 
@@ -104,14 +99,6 @@ public class PlayerController : MonoBehaviour
         float buoyantForce = waterDensity * totalVolume * gravity;
 
         rb.AddForce(Vector3.up * (buoyantForce - (totalMass * gravity))); // buoyant force acting upwards, weight acting downwards
-    }
-
-    private void ClampToSurface()
-    {
-        if (transform.position.y >= surfaceAbovePlayer.transform.position.y) // player is at or above surface
-        {
-            rb.AddForce(Vector3.down * surfaceDownForce);
-        }
     }
 
     private void SwimMovement()
