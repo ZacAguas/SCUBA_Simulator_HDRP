@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
+    private PlayerController playerController;
     private DepthManager depthManager;
     
     public float CurrentTankPressure {
@@ -27,6 +28,8 @@ public class TankController : MonoBehaviour
     [SerializeField] private float restingExertion; // default exertion value
     [SerializeField] private float cylinderVolume; // volume of cylinder in litres (normally 12 or 15)
     [SerializeField] private float sac; // average sac rate (15-18 litres/min for experienced divers)
+    // BCD
+    private float previousBCDVolume;
     
 
     public enum GasMix
@@ -57,6 +60,7 @@ public class TankController : MonoBehaviour
 
     private void Awake()
     {
+        playerController = GetComponent<PlayerController>();
         depthManager = GetComponent<DepthManager>();
         TankUpdateWaitForSeconds = new WaitForSeconds(tankUpdateInterval); // cache the wait for seconds based on the update interval
     }
@@ -65,6 +69,9 @@ public class TankController : MonoBehaviour
     {
         CurrentTankPressure = MaxTankPressure;
         Exertion = restingExertion;
+
+        previousBCDVolume = playerController.CurrentBCDVolume;
+        
         InitialiseGasMix();
         
         // Update/check pressure repeatedly
@@ -126,6 +133,9 @@ public class TankController : MonoBehaviour
     {
         // reduce tank based on exertion and air consumption rate
         CurrentTankPressure -= CalculateConsumption();
+     
+        // reduce tank based on BCD inflate volume
+        CurrentTankPressure -= CalculateInflateConsumption();
     }
     private float CalculateConsumption()
     {
@@ -141,6 +151,22 @@ public class TankController : MonoBehaviour
         float pressureUsed = gasConsumed / cylinderVolume;
         
         return pressureUsed;
+    }
+
+    private float CalculateInflateConsumption()
+    { 
+        // calculate the air consumed per update interval only when inflating
+        float currentBCDVolume = playerController.CurrentBCDVolume;
+        float volumeDifferenceInterval = (currentBCDVolume - previousBCDVolume) * tankUpdateInterval; // difference per time interval
+
+        float gasConsumed = volumeDifferenceInterval * depthManager.PressureAbsolute;
+        float pressureUsed = gasConsumed / cylinderVolume;
+
+
+        previousBCDVolume = currentBCDVolume; // for next iteration
+        Debug.LogWarning("INFLATE PRESSURE USED: " + pressureUsed * 1000);
+        return Mathf.Max(pressureUsed, 0);
+
     }
 
     private IEnumerator TankPressure()
