@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
     private PlayerController playerController;
     private DepthManager depthManager;
+    private InputManager inputManager; // for checking if inflating
     
     public float CurrentTankPressure {
         get => currentTankPressure;
@@ -62,6 +62,7 @@ public class TankController : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         depthManager = GetComponent<DepthManager>();
+        inputManager = GetComponent<InputManager>();
         TankUpdateWaitForSeconds = new WaitForSeconds(tankUpdateInterval); // cache the wait for seconds based on the update interval
     }
 
@@ -149,24 +150,28 @@ public class TankController : MonoBehaviour
 
         float gasConsumed = exertionAdjustedSAC * depthManager.PressureAbsolute;
         float pressureUsed = gasConsumed / cylinderVolume;
-        
         return pressureUsed;
     }
 
     private float CalculateInflateConsumption()
-    { 
-        // calculate the air consumed per update interval only when inflating
+    {
+        float pressureUsed = 0;
         float currentBCDVolume = playerController.CurrentBCDVolume;
-        float volumeDifferenceInterval = (currentBCDVolume - previousBCDVolume) * tankUpdateInterval; // difference per time interval
 
-        float gasConsumed = volumeDifferenceInterval * depthManager.PressureAbsolute;
-        float pressureUsed = gasConsumed / cylinderVolume;
+        if (inputManager.GetBCDInput() > 0) // inflating
+        {
+            // calculate the air consumed per update interval only when inflating
+            float volumeDifferenceInterval = (currentBCDVolume - previousBCDVolume) * tankUpdateInterval; // difference per time interval
+
+            float gasConsumed = Mathf.Max(volumeDifferenceInterval, 0) * depthManager.PressureAbsolute; // ensure only consume gas when difference is positive (inflating not deflating)
+            pressureUsed = gasConsumed / cylinderVolume;
 
 
+            
+        }
+        
         previousBCDVolume = currentBCDVolume; // for next iteration
-        Debug.LogWarning("INFLATE PRESSURE USED: " + pressureUsed * 1000);
-        return Mathf.Max(pressureUsed, 0);
-
+        return pressureUsed;
     }
 
     private IEnumerator TankPressure()
