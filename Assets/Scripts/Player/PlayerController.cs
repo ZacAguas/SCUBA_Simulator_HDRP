@@ -76,13 +76,15 @@ public class PlayerController : MonoBehaviour
     private void MouseMovement()
     {
         Vector2 mouseInput = inputManager.GetMouseInput();
-        yMouseRotation += mouseInput.x * mouseSensitivity * Time.deltaTime;
-        xMouseRotation -= mouseInput.y * mouseSensitivity * Time.deltaTime;
         
+        float invertedXInput = xMouseRotation is > 90f or < -90f ? -mouseInput.x : mouseInput.x; // invert x if we are upside down
+        yMouseRotation += invertedXInput * mouseSensitivity * Time.deltaTime;
+        xMouseRotation -= mouseInput.y * mouseSensitivity * Time.deltaTime;
+
         if (clampVerticalLook)
             xMouseRotation = Mathf.Clamp(xMouseRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xMouseRotation, yMouseRotation, 0);
+        transform.localRotation = Quaternion.Euler(xMouseRotation, yMouseRotation, 0);
     }
 
     private void AdjustBCD()
