@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.alelievr.hdrp-ui-camera-stacking": "1.4.1",
+    "com.llcheesell.led_screen_shader": "https://github.com/llcheesell/LEDScreenShader.git?path=/Assets/LEDScreenShader#v0.1.0",
     "com.unity.collab-proxy": "2.0.4",
     "com.unity.feature.development": "1.0.2",
     "com.unity.render-pipelines.high-definition": "16.0.2",
@@ -37,5 +39,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Open UPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.alelievr"
+      ]
+    }
+  ]
 }
