@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void MouseMovement()
+    private void  MouseMovement()
     {
         Vector2 mouseInput = inputManager.GetMouseInput();
         

@@ -9,6 +9,7 @@ public class DepthManager : MonoBehaviour
 {
     private TankController tankController;
     private PlayerController playerController;
+    private NitrogenNarcosisController nitrogenNarcosisController;
     
     public float Depth { get; private set; }
     public float PressureAbsolute => (Depth + 10) / 10; // absolute atmospheric pressure ie. 1ATA at 0m, 2ATA at 10m
