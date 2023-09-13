@@ -100,10 +100,10 @@ MonoBehaviour:
     m_Value: 2
   intensity:
     m_OverrideState: 1
-    m_Value: 0.576
+    m_Value: 0.434
   response:
     m_OverrideState: 1
-    m_Value: 0.728
+    m_Value: 0.602
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -123,9 +123,9 @@ MonoBehaviour:
   - {fileID: -8383375286007909014}
   - {fileID: 920989773215899127}
   - {fileID: -3534694807120524538}
+  - {fileID: -990983770264229197}
   - {fileID: -8166330720848475388}
   - {fileID: -1938230887358594274}
-  - {fileID: -990983770264229197}
 --- !u!114 &920989773215899127
 MonoBehaviour:
   m_ObjectHideFlags: 3

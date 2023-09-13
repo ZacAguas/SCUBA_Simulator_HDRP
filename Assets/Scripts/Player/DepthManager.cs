@@ -14,7 +14,6 @@ public class DepthManager : MonoBehaviour
     public float Depth { get; private set; }
     public float PressureAbsolute => (Depth + 10) / 10; // absolute atmospheric pressure ie. 1ATA at 0m, 2ATA at 10m
 
-    
     [field: SerializeField] public float MaxAscentRate { get; private set; } // the max speed the player should ascend at (normally 9/16 m/min)
     public float CurrentAscentRate { get; private set; } // in m/min, positive if ascending, negative if descending
     
@@ -30,10 +29,14 @@ public class DepthManager : MonoBehaviour
     [SerializeField] private float narcosisAirThreshold; // the depth at which narcosis starts (FOR AIR)
     private float equivalentNarcoticDepth; // estimate depth at which gas mixture produces equivalent narcotic effect to air
 
+    private float narcosisLevel2Depth; // depth at which level 2 narcosis starts
+    private float narcosisLevel3Depth; // depth at which level 3 narcosis starts
+
     private void Awake()
     {
         tankController = GetComponent<TankController>();
         playerController = GetComponent<PlayerController>();
+        nitrogenNarcosisController = GetComponent<NitrogenNarcosisController>();
     }
 
     private void Start()
@@ -43,6 +46,7 @@ public class DepthManager : MonoBehaviour
         playerNarced = false;
 
         CalculateEquivalentNarcoticDepth(); // careful with script execution order (percentages must be calculated in tank controller before this)
+        SetupNarcoticLevels();
     }
     private void FixedUpdate() // for physics calculations
     {
@@ -50,14 +54,23 @@ public class DepthManager : MonoBehaviour
         CalculateEquivalentNarcoticDepth();
         CalculateAscentRate();
         CheckNarcosis();
-
-
         prevDepth = Depth; // keep track of the depth last frame
     }
     
     public float GetVolumeAtPressureATA(float volumeAtSurface)
     {
         return volumeAtSurface / PressureAbsolute;
+    }
+
+    private void SetupNarcoticLevels()
+    {
+        float rangePerLevel = (tankController.MOD - equivalentNarcoticDepth) / 3f;
+        Debug.Log("range per level: " + rangePerLevel);
+
+        narcosisLevel2Depth = narcosisAirThreshold + rangePerLevel;
+        narcosisLevel3Depth = narcosisAirThreshold + rangePerLevel * 2;
+        Debug.Log("lvl 2:" + narcosisLevel2Depth);
+        Debug.Log("lvl 3:" + narcosisLevel3Depth);
     }
 
     private void CalculateDepth()
@@ -83,15 +96,30 @@ public class DepthManager : MonoBehaviour
     {
         if (equivalentNarcoticDepth >= narcosisAirThreshold) // raise narced event if past threshold and not already narced
         {
+            // calculate narcotic level
+            if (narcosisAirThreshold <= Depth && Depth <= narcosisLevel2Depth)
+                nitrogenNarcosisController.NarcosisLevel = 1;
+            else if (narcosisLevel2Depth <= Depth && Depth <= narcosisLevel3Depth)
+                nitrogenNarcosisController.NarcosisLevel = 2;
+            else if (narcosisLevel3Depth <= Depth && Depth <= tankController.MOD)
+                nitrogenNarcosisController.NarcosisLevel = 3;
+            else
+            {
+                nitrogenNarcosisController.NarcosisLevel = 4;
+                // add logic for timer and then killing player
+            }
+            
             if (!playerNarced) // only invoke if not already narced
             {
-                onBecomeNarced.Invoke(); // do I need to check if this is null?
+                nitrogenNarcosisController.EnterNarcoticDepth();
+                // onBecomeNarced.Invoke(); // do I need to check if this is null?
                 Debug.Log("invoke narced event");
             }
             playerNarced = true;
         }
         else
         {
+            nitrogenNarcosisController.ExitNarcoticDepth();
             playerNarced = false;
         }
     }

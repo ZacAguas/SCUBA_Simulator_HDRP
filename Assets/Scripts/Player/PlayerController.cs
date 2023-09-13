@@ -53,7 +53,6 @@ public class PlayerController : MonoBehaviour
         rb.mass = bodyMass;
         bodyVolume = CalculateBodyVolume();
         inflationMultiplier = 1; // start fully inflated
-        Debug.Log("Body volume: " + bodyVolume);
     }
 
     private void Start()

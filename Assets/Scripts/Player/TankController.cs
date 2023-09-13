@@ -17,6 +17,8 @@ public class TankController : MonoBehaviour
 
     [field: SerializeField] public float MaxTankPressure { get; private set; } // max pressure of tank in bar
 
+    [field: SerializeField] public float MaxPPO2 { get; private set; }
+    [field: SerializeField] public float MOD { get; private set; } // maximum operating depth of gas mixture
 
     // Air consumption fields
     public float Exertion
@@ -114,6 +116,8 @@ public class TankController : MonoBehaviour
                 heliumPercentage = 0.7f;
                 break;
         }
+
+        MOD = (MaxPPO2 / oxygenPercentage - 1) * 10; // calculate Maximum Operating Depth
     }
 
     private void CheckTankPressure()

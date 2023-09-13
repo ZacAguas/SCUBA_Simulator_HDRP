@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1362.5636, g: 1548.3402, b: 2231.43, a: 1}
+  m_IndirectSpecularColor: {r: 1362.5051, g: 1548.2991, b: 2231.385, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1271,6 +1271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxTankPressure>k__BackingField: 200
+  <MaxPPO2>k__BackingField: 1.6
+  <MOD>k__BackingField: 66
   restingExertion: 0.5
   cylinderVolume: 12
   sac: 20
@@ -1444,6 +1446,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 1733803563}
+  defaultBloomStreakIntensity: 0.35
+  defaultDirectionalBlurIntensity: 32
+  defaultSharpenIntensity: 0.45
+  defaultFilmGrainIntensity: 0.5
+  defaultDisplaceViewAmount: {x: -2.75, y: -0.5}
+  defaultWobbleAmplitude: 0.027
+  defaultWobbleSpeed: 10
 --- !u!1 &1202348564
 GameObject:
   m_ObjectHideFlags: 0
