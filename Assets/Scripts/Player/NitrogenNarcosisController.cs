@@ -33,6 +33,15 @@ public class NitrogenNarcosisController : MonoBehaviour
     // Level 2
     private DisplaceView displaceView;
     private Wobble wobble;
+    // Camera FX
+    private Pixelate pixelate;
+    private RGBSplit rgbSplit;
+    private ChromaLines chromaLines;
+    private ScreenFuzz screenFuzz;
+    private Nightvision nightVision;
+    
+
+    [SerializeField] private bool enableCameraFX; // whether or not to use camera fx
 
     private Tween currentTween; // the current tween we are waiting for to finish
 
@@ -60,21 +69,18 @@ public class NitrogenNarcosisController : MonoBehaviour
             !profile.TryGet(out sharpen) ||
             !profile.TryGet(out filmGrain) ||
             !profile.TryGet(out displaceView) ||
-            !profile.TryGet(out wobble))
+            !profile.TryGet(out wobble) ||
+            !profile.TryGet(out pixelate) ||
+            !profile.TryGet(out rgbSplit) ||
+            !profile.TryGet(out chromaLines) ||
+            !profile.TryGet(out screenFuzz) ||
+            !profile.TryGet(out nightVision))
         {
             Debug.LogError("Didn't get effect(s) from volume profile");
             return;
         }
         
         // initialising values
-        
-        // bloomStreak.intensity.value = defaultBloomStreakIntensity;
-        // directionalBlur.intensity.value = defaultDirectionalBlurIntensity;
-        // sharpen.intensity.value = defaultSharpenIntensity;
-        // filmGrain.intensity.value = defaultFilmGrainIntensity;
-        // displaceView.amount.value = defaultDisplaceViewAmount;
-        // wobble.amplitude.value = defaultWobbleAmplitude;
-        // wobble.speed.value = defaultWobbleSpeed;
         
         bloomStreak.intensity.value = 0;
         directionalBlur.intensity.value = 0;
@@ -83,7 +89,12 @@ public class NitrogenNarcosisController : MonoBehaviour
         displaceView.amount.value = Vector2.zero;
         wobble.amplitude.value = 0;
         wobble.speed.value = 0;
-
+        // camera FX
+        pixelate.intensity.value = 0;
+        rgbSplit.intensity.value = 0;
+        chromaLines.intensity.value = 0;
+        screenFuzz.intensity.value = 0;
+        nightVision.darkness.value = 0;
 
 
     }

@@ -44,6 +44,22 @@ MonoBehaviour:
   amount:
     m_OverrideState: 1
     m_Value: {x: -2.76, y: -0.71}
+--- !u!114 &-6828380569918963578
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6832434842b1c8f4984aac56b8f0b2fc, type: 3}
+  m_Name: Pixelate
+  m_EditorClassIdentifier: 
+  active: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 25
 --- !u!114 &-3534694807120524538
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -60,6 +76,47 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0.459
+--- !u!114 &-3150885482232151556
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8dbf9e49800a9d4f8ec75ce3b3b6035, type: 3}
+  m_Name: Nightvision
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    m_OverrideState: 1
+    m_Value: 1
+  darkness:
+    m_OverrideState: 1
+    m_Value: 0.957
+  greenPower:
+    m_OverrideState: 1
+    m_Value: 0.09
+--- !u!114 &-2003648862742459468
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71487a2ded5feb84fb6bbafc51fd9e81, type: 3}
+  m_Name: RGBSplit
+  m_EditorClassIdentifier: 
+  active: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.2
+  angle:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-1938230887358594274
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -126,6 +183,11 @@ MonoBehaviour:
   - {fileID: -990983770264229197}
   - {fileID: -8166330720848475388}
   - {fileID: -1938230887358594274}
+  - {fileID: -6828380569918963578}
+  - {fileID: -2003648862742459468}
+  - {fileID: 4091466100886691519}
+  - {fileID: 4399765128054218024}
+  - {fileID: -3150885482232151556}
 --- !u!114 &920989773215899127
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -148,3 +210,44 @@ MonoBehaviour:
   sampleCount:
     m_OverrideState: 1
     m_Value: 15
+--- !u!114 &4091466100886691519
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c57d4be0a6cf6a48b15ffa60a528f56, type: 3}
+  m_Name: ChromaLines
+  m_EditorClassIdentifier: 
+  active: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.403
+  scanlinesIntensity:
+    m_OverrideState: 1
+    m_Value: 0
+  speed:
+    m_OverrideState: 1
+    m_Value: 3
+  scanlinesCount:
+    m_OverrideState: 1
+    m_Value: 800
+--- !u!114 &4399765128054218024
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79863c88852b02a45b0f118843b4be60, type: 3}
+  m_Name: ScreenFuzz
+  m_EditorClassIdentifier: 
+  active: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.265

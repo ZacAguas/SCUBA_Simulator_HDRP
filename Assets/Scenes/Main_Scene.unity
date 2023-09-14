@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1362.5715, g: 1548.3342, b: 2231.432, a: 1}
+  m_IndirectSpecularColor: {r: 1363.8263, g: 1553.5704, b: 2246.4358, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1432,6 +1432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 1733803563}
+  enableCameraFX: 0
   defaultBloomStreakIntensity: 0.35
   defaultDirectionalBlurIntensity: 32
   defaultSharpenIntensity: 0.45
@@ -1675,7 +1676,7 @@ Transform:
   m_GameObject: {fileID: 1514544888}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
-  m_LocalPosition: {x: -3.93, y: 0.0950267, z: 9.72}
+  m_LocalPosition: {x: -3.93, y: 0.47680223, z: 9.72}
   m_LocalScale: {x: 2.6705, y: 4.0984163, z: 2.6705}
   m_ConstrainProportionsScale: 0
   m_Children: []
