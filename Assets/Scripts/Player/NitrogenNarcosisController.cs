@@ -98,14 +98,13 @@ public class NitrogenNarcosisController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1f, 5f)); // wait in between groups of pulses
+            int iterations; // number of repetitions for each group of pulses (depends on narcosis level)
             
-            int iterations = Random.Range(1, 5); // number of repeats of this group of pulses
             
             // durations of each pulse
-            float shortDuration = Random.Range(.25f, .75f); 
-            float medDuration = Random.Range(1f, 2f);
-            float longDuration = Random.Range(2f, 4f);
+            float shortDuration = Random.Range(.2f, .5f); 
+            float medDuration = Random.Range(2f, 4f);
+            float longDuration = Random.Range(10f, 15f);
             
             switch (NarcosisLevel)
             {
@@ -115,32 +114,51 @@ public class NitrogenNarcosisController : MonoBehaviour
                     yield break; // exit coroutine
                 case 1:
                     Debug.Log("Level 1");
+                    
+                    yield return new WaitForSeconds(Random.Range(10f, 25f)); // wait in between groups of pulses
+                    iterations = Random.Range(1, 5);
+                    
+                    
                     sharpen.active = true;
                     filmGrain.active = true;
-                    currentTween = DOVirtual.Float(0, defaultSharpenIntensity, longDuration, val => sharpen.intensity.value = val)
+                    
+                    // Sharpen
+                    currentTween = DOVirtual.Float(0, defaultSharpenIntensity, medDuration, val => sharpen.intensity.value = val)
                         .SetLoops(iterations * 2, LoopType.Yoyo) // iterations * 2 because yoyo loop type counts iteration as each direction
                         .SetEase(Ease.InBounce);
-                    currentTween = DOVirtual.Float(0, defaultFilmGrainIntensity, longDuration, val => filmGrain.intensity.value = val)
+                    // Film grain
+                    currentTween = DOVirtual.Float(0, defaultFilmGrainIntensity, medDuration, val => filmGrain.intensity.value = val)
                         .SetLoops(iterations * 2, LoopType.Yoyo)
                         .SetEase(Ease.InBounce);
-                    
-                    // directionalBlur.active = true;
-                    // currentTween = DOVirtual.Float(0, defaultDirectionalBlurIntensity, longDuration, val => directionalBlur.intensity.value = val)
-                    // .SetLoops(iterations * 2, LoopType.Yoyo)
-                    // .SetEase(Ease.Linear); 
                     
                     yield return currentTween.WaitForCompletion();
                     break;
                 case 2:
-                    bloomStreak.active = true;
-                    displaceView.active = true;
                     Debug.Log("Level 2");
+                    
+                    yield return new WaitForSeconds(Random.Range(2f, 15f));
+                    iterations = Random.Range(3, 9);
+                    
+                    displaceView.active = true;
+                    currentTween = DOVirtual.Vector2(Vector2.zero, defaultDisplaceViewAmount, shortDuration, val => displaceView.amount.value = val)
+                        .SetLoops(iterations * 2, LoopType.Yoyo) // iterations * 2 because yoyo loop type counts iteration as each direction
+                        .SetEase(Ease.InExpo);
+                    yield return currentTween.WaitForCompletion();
                     break;
                 case 3:
+                    Debug.Log("Level 3");
+                    
+                    yield return new WaitForSeconds(Random.Range(1f, 5f));
+                    iterations = Random.Range(8,15);
+                    
                     wobble.active = true;
                     directionalBlur.active = true;
-                    Debug.Log("Level 3");
+                    
+                    currentTween = DOVirtual.Float(0, defaultWobbleAmplitude, longDuration, val => wobble.amplitude.value = val)
+                        .SetLoops(1, LoopType.Yoyo)
+                        .SetEase(Ease.OutElastic);
 
+                    yield return currentTween.WaitForCompletion();
                     break;
             }
             

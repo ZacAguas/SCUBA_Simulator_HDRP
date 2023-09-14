@@ -79,6 +79,7 @@ Material:
     - _Tiling_and_Offset: {r: 20, g: 20, b: 0, a: 0}
     - _Vector4: {r: 40, g: 40, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &4487198186264715375
 MonoBehaviour:
   m_ObjectHideFlags: 11
