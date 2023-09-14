@@ -65,12 +65,9 @@ public class DepthManager : MonoBehaviour
     private void SetupNarcoticLevels()
     {
         float rangePerLevel = (tankController.MOD - equivalentNarcoticDepth) / 3f;
-        Debug.Log("range per level: " + rangePerLevel);
 
         narcosisLevel2Depth = narcosisAirThreshold + rangePerLevel;
         narcosisLevel3Depth = narcosisAirThreshold + rangePerLevel * 2;
-        Debug.Log("lvl 2:" + narcosisLevel2Depth);
-        Debug.Log("lvl 3:" + narcosisLevel3Depth);
     }
 
     private void CalculateDepth()
@@ -119,7 +116,8 @@ public class DepthManager : MonoBehaviour
         }
         else
         {
-            nitrogenNarcosisController.ExitNarcoticDepth();
+            // nitrogenNarcosisController.ExitNarcoticDepth(); // no longer need to stop here, handled in narcosis controller switch statement
+            nitrogenNarcosisController.NarcosisLevel = 0;
             playerNarced = false;
         }
     }

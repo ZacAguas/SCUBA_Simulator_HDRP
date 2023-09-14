@@ -15,17 +15,13 @@ public class NitrogenNarcosisController : MonoBehaviour
     
     public int NarcosisLevel // 0 = not narced, 1-3 = narced, 4 = past MOD
     {
-        get
-        {
-            return narcosisLevel;
-        }
+        get => narcosisLevel;
         set
         {
             if (value >= 0 && value <= 4)
                 narcosisLevel = value;
         }
     }
-
     private int narcosisLevel; // backing field
     
 
@@ -37,6 +33,8 @@ public class NitrogenNarcosisController : MonoBehaviour
     // Level 2
     private DisplaceView displaceView;
     private Wobble wobble;
+
+    private Tween currentTween; // the current tween we are waiting for to finish
 
     [SerializeField] private float defaultBloomStreakIntensity;
     [SerializeField] private float defaultDirectionalBlurIntensity;
@@ -92,13 +90,8 @@ public class NitrogenNarcosisController : MonoBehaviour
 
     public void EnterNarcoticDepth()
     {
-        StartCoroutine(NarcosisLoop());
-    }
-
-    public void ExitNarcoticDepth()
-    {
-        StopCoroutine(NarcosisLoop());
-        
+        if (!currentTween.IsActive())
+            StartCoroutine(NarcosisLoop());
     }
 
     private IEnumerator NarcosisLoop()
@@ -108,39 +101,49 @@ public class NitrogenNarcosisController : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(1f, 5f)); // wait in between groups of pulses
             
             int iterations = Random.Range(1, 5); // number of repeats of this group of pulses
-            float durationSecs = Random.Range(.2f, 2f); // duration of each pulse
-
-            float longMultiplier = 3f; // multiplier for long effects
-            float medMultiplier = 1f; // multiplier for med effects
-            float shortMultiplier = .5f; // multiplier for short effects
-
+            
+            // durations of each pulse
+            float shortDuration = Random.Range(.25f, .75f); 
+            float medDuration = Random.Range(1f, 2f);
+            float longDuration = Random.Range(2f, 4f);
+            
             switch (NarcosisLevel)
             {
-                case 0:
-                    Debug.LogWarning("Shouldn't have narcotic level 0 inside this loop");
-                    break;
+                case 0: // outside of narcosis depth
+                    if (currentTween.IsActive())
+                        yield return currentTween.WaitForCompletion(); // wait for tween to complete
+                    yield break; // exit coroutine
                 case 1:
+                    Debug.Log("Level 1");
                     sharpen.active = true;
                     filmGrain.active = true;
-                    DOVirtual.Float(0, defaultSharpenIntensity, durationSecs * longMultiplier, val => sharpen.intensity.value = val)
-                        .SetLoops(iterations, LoopType.Yoyo).SetEase(Ease.InBounce);
-                    DOVirtual.Float(0, defaultFilmGrainIntensity, durationSecs * longMultiplier, val => filmGrain.intensity.value = val)
-                        .SetLoops(iterations, LoopType.Yoyo).SetEase(Ease.InBounce);
+                    currentTween = DOVirtual.Float(0, defaultSharpenIntensity, longDuration, val => sharpen.intensity.value = val)
+                        .SetLoops(iterations * 2, LoopType.Yoyo) // iterations * 2 because yoyo loop type counts iteration as each direction
+                        .SetEase(Ease.InBounce);
+                    currentTween = DOVirtual.Float(0, defaultFilmGrainIntensity, longDuration, val => filmGrain.intensity.value = val)
+                        .SetLoops(iterations * 2, LoopType.Yoyo)
+                        .SetEase(Ease.InBounce);
                     
+                    // directionalBlur.active = true;
+                    // currentTween = DOVirtual.Float(0, defaultDirectionalBlurIntensity, longDuration, val => directionalBlur.intensity.value = val)
+                    // .SetLoops(iterations * 2, LoopType.Yoyo)
+                    // .SetEase(Ease.Linear); 
                     
-                    
+                    yield return currentTween.WaitForCompletion();
                     break;
                 case 2:
                     bloomStreak.active = true;
                     displaceView.active = true;
+                    Debug.Log("Level 2");
                     break;
                 case 3:
                     wobble.active = true;
                     directionalBlur.active = true;
+                    Debug.Log("Level 3");
+
                     break;
             }
             
         }
     }
-
 }
