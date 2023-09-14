@@ -76,7 +76,15 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mouseInput = inputManager.GetMouseInput();
         
-        float invertedXInput = xMouseRotation is > 90f or < -90f ? -mouseInput.x : mouseInput.x; // invert x if we are upside down
+        float verticalRotationAngle = transform.localRotation.eulerAngles.x;
+        float invertedXInput;
+        if (verticalRotationAngle is > 90f and < 270f) {
+            invertedXInput = -mouseInput.x; // Invert X if the camera is upside down
+        } else {
+            invertedXInput = mouseInput.x; // Don't invert X if the camera is not upside down
+        }
+        
+        
         yMouseRotation += invertedXInput * mouseSensitivity * Time.deltaTime;
         xMouseRotation -= mouseInput.y * mouseSensitivity * Time.deltaTime;
 
