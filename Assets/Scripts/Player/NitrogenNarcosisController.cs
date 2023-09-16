@@ -6,14 +6,17 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using DG.Tweening;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class NitrogenNarcosisController : MonoBehaviour
 {
-    private InputManager inputManager;
-    
-    [SerializeField] private Volume volume;
-    private VolumeProfile profile;
+    private InputManager inputManager; // for camera FX toggle
+    private DepthManager depthManager; // need depth value for changing FX eg. exposure
+
+    [SerializeField] private Volume globalVolume; // for exposure etc.
+    [SerializeField] private WaterSurface waterSurface; // for absorption distance multiplier modified by depth
+    [SerializeField] private Volume narcosisVolume;
     
     public int NarcosisLevel // 0 = not narced, 1-3 = narced, 4 = past MOD
     {
@@ -25,8 +28,18 @@ public class NitrogenNarcosisController : MonoBehaviour
         }
     }
     private int narcosisLevel; // backing field
-    
 
+    // Visibility
+    [SerializeField] private float minExposureCompensation;
+    [SerializeField] private float maxExposureCompensation;
+    [SerializeField] private float maxAbsorptionDistanceMultiplier;
+    [SerializeField] private Color deepScatteringColor;
+
+    private Exposure exposure;
+    private float defaultExposureCompensation = 0;
+    [SerializeField] private float defaultAbsorptionDistanceMultiplier;
+    [SerializeField] private Color defaultScatteringColor;
+    
     // Level 1
     private BloomStreak bloomStreak;
     private DirectionalBlur directionalBlur;
@@ -65,18 +78,26 @@ public class NitrogenNarcosisController : MonoBehaviour
     private void Start()
     {
         inputManager = GetComponent<InputManager>();
+        depthManager = GetComponent<DepthManager>();
         
         NarcosisLevel = 0;
 
-        var profile = volume.profile;
+        InitNarcosisVolume();
+        InitGlobalVolume();
+        waterSurface.scatteringColor = defaultScatteringColor; // reset scattering
+    }
+
+    private void InitNarcosisVolume()
+    {
+        var profile = narcosisVolume.profile;
         if (!profile)
         {
-            Debug.LogError("No profile on volume");
+            Debug.LogError("No profile on narcosis volume");
             return;
         }
 
-        if (!profile.TryGet(out bloomStreak) || 
-            !profile.TryGet(out directionalBlur) || 
+        if (!profile.TryGet(out bloomStreak) ||
+            !profile.TryGet(out directionalBlur) ||
             !profile.TryGet(out sharpen) ||
             !profile.TryGet(out filmGrain) ||
             !profile.TryGet(out displaceView) ||
@@ -87,12 +108,12 @@ public class NitrogenNarcosisController : MonoBehaviour
             !profile.TryGet(out screenFuzz) ||
             !profile.TryGet(out nightVision))
         {
-            Debug.LogError("Didn't get effect(s) from volume profile");
+            Debug.LogError("Didn't get effect(s) from narcosis volume profile");
             return;
         }
-        
+
         // initialising values
-        
+
         bloomStreak.intensity.value = 0;
         directionalBlur.intensity.value = 0;
         sharpen.intensity.value = 0;
@@ -106,15 +127,39 @@ public class NitrogenNarcosisController : MonoBehaviour
         chromaLines.intensity.value = 0;
         screenFuzz.intensity.value = 0;
         nightVision.darkness.value = 0;
+    }
 
+    private void InitGlobalVolume()
+    {
+        var profile = globalVolume.profile;
+        if (!profile)
+        {
+            Debug.LogError("No profile on global volume");
+            return;
+        }
 
+        if (!profile.TryGet(out exposure))
+        {
+            Debug.LogError("Didn't get effect(s) from global volume profile");
+            return;
+        }
+
+        // initialising values
+
+        exposure.compensation.value = 0;
     }
 
     private void Update()
     {
+        CheckToggleMode();
+        AdjustVisibility();
+    }
+
+    private void CheckToggleMode()
+    {
         // only continue on the frame we toggle
-        if (!inputManager.GetToggleMode()) return;
-        
+        if (!Input.GetKeyDown(KeyCode.C)) return;
+
         // effects are currently on, turn them off
         if (enableCameraFX)
         {
@@ -123,13 +168,13 @@ public class NitrogenNarcosisController : MonoBehaviour
             chromaLines.active = false;
             screenFuzz.active = false;
             nightVision.active = false;
-            
+
             pixelate.intensity.value = 0;
             rgbSplit.intensity.value = 0;
             chromaLines.intensity.value = 0;
             screenFuzz.intensity.value = 0;
             nightVision.darkness.value = 0;
-                
+
             enableCameraFX = false; // effects are now off
         }
         else
@@ -139,7 +184,7 @@ public class NitrogenNarcosisController : MonoBehaviour
             chromaLines.active = true;
             screenFuzz.active = true;
             nightVision.active = true;
-            
+
             pixelate.intensity.value = defaultPixelateIntensity;
             rgbSplit.intensity.value = defaultRGBSplitIntensity;
             chromaLines.intensity.value = defaultChromaLinesIntensity;
@@ -148,7 +193,20 @@ public class NitrogenNarcosisController : MonoBehaviour
 
             enableCameraFX = true;
         }
+    }
 
+    private void AdjustVisibility()
+    {
+        // interpolate scattering colour darker, absorption distance higher, (exposure compensation?) with depth
+        float depth = depthManager.Depth;
+        float maxDepth = 300;
+        float normalisedDepth = depth / maxDepth;
+        
+        waterSurface.scatteringColor = Color.Lerp(defaultScatteringColor, deepScatteringColor, normalisedDepth);
+        
+        waterSurface.absorptionDistanceMultiplier = 
+            Mathf.Lerp(defaultAbsorptionDistanceMultiplier,maxAbsorptionDistanceMultiplier, normalisedDepth);
+        
     }
 
     public void EnterNarcoticDepth()
