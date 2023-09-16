@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     private float inflateDeflateInput;
     private float mouseX;
     private float mouseY;
+    private bool toggleMode; // for toggling camera mode
 
     private void Start()
     {
@@ -24,9 +25,11 @@ public class InputManager : MonoBehaviour
         forwardBackInput = Input.GetAxis("Vertical");
         upDownInput = Input.GetAxis("Ascend");
         inflateDeflateInput = Input.GetAxisRaw("BCD"); // raw input to prevent smoothing
-
+        
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
+
+        toggleMode = Input.GetButtonDown("Toggle Mode");
     }
 
     public Vector3 GetSwimInput()
@@ -42,6 +45,11 @@ public class InputManager : MonoBehaviour
     public float GetBCDInput()
     {
         return inflateDeflateInput;
+    }
+
+    public bool GetToggleMode()
+    {
+        return toggleMode;
     }
 
 }

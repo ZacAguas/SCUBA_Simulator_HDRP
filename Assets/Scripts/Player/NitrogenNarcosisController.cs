@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 
 public class NitrogenNarcosisController : MonoBehaviour
 {
+    private InputManager inputManager;
+    
     [SerializeField] private Volume volume;
     private VolumeProfile profile;
     
@@ -52,9 +54,18 @@ public class NitrogenNarcosisController : MonoBehaviour
     [SerializeField] private Vector2 defaultDisplaceViewAmount;
     [SerializeField] private float defaultWobbleAmplitude;
     [SerializeField] private float defaultWobbleSpeed;
+    
+    // camera fx
+    [SerializeField] private int defaultPixelateIntensity = 25;
+    [SerializeField] private float defaultRGBSplitIntensity = .2f;
+    [SerializeField] private float defaultChromaLinesIntensity = .33f;
+    [SerializeField] private float defaultScreenFuzzIntensity = .265f;
+    [SerializeField] private float defaultNightVisionDarkness = .95f;
 
     private void Start()
     {
+        inputManager = GetComponent<InputManager>();
+        
         NarcosisLevel = 0;
 
         var profile = volume.profile;
@@ -96,6 +107,47 @@ public class NitrogenNarcosisController : MonoBehaviour
         screenFuzz.intensity.value = 0;
         nightVision.darkness.value = 0;
 
+
+    }
+
+    private void Update()
+    {
+        // only continue on the frame we toggle
+        if (!inputManager.GetToggleMode()) return;
+        
+        // effects are currently on, turn them off
+        if (enableCameraFX)
+        {
+            pixelate.active = false;
+            rgbSplit.active = false;
+            chromaLines.active = false;
+            screenFuzz.active = false;
+            nightVision.active = false;
+            
+            pixelate.intensity.value = 0;
+            rgbSplit.intensity.value = 0;
+            chromaLines.intensity.value = 0;
+            screenFuzz.intensity.value = 0;
+            nightVision.darkness.value = 0;
+                
+            enableCameraFX = false; // effects are now off
+        }
+        else
+        {
+            pixelate.active = true;
+            rgbSplit.active = true;
+            chromaLines.active = true;
+            screenFuzz.active = true;
+            nightVision.active = true;
+            
+            pixelate.intensity.value = defaultPixelateIntensity;
+            rgbSplit.intensity.value = defaultRGBSplitIntensity;
+            chromaLines.intensity.value = defaultChromaLinesIntensity;
+            screenFuzz.intensity.value = defaultScreenFuzzIntensity;
+            nightVision.darkness.value = defaultNightVisionDarkness;
+
+            enableCameraFX = true;
+        }
 
     }
 
