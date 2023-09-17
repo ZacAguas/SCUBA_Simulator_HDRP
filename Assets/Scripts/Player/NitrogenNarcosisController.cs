@@ -203,10 +203,9 @@ public class NitrogenNarcosisController : MonoBehaviour
         float normalisedDepth = depth / maxDepth;
         
         waterSurface.scatteringColor = Color.Lerp(defaultScatteringColor, deepScatteringColor, normalisedDepth);
-        
-        waterSurface.absorptionDistanceMultiplier = 
-            Mathf.Lerp(defaultAbsorptionDistanceMultiplier,maxAbsorptionDistanceMultiplier, normalisedDepth);
-        
+        waterSurface.absorptionDistanceMultiplier = Mathf.Lerp(defaultAbsorptionDistanceMultiplier,maxAbsorptionDistanceMultiplier, normalisedDepth);;
+
+
     }
 
     public void EnterNarcoticDepth()
