@@ -34,6 +34,8 @@ public class NitrogenNarcosisController : MonoBehaviour
     [SerializeField] private float maxExposureCompensation;
     [SerializeField] private float maxAbsorptionDistanceMultiplier;
     [SerializeField] private Color deepScatteringColor;
+    // for checking in inspector
+    [SerializeField] private Color currentScatteringColor;
 
     private Exposure exposure;
     private float defaultExposureCompensation = 0;
@@ -202,7 +204,9 @@ public class NitrogenNarcosisController : MonoBehaviour
         float maxDepth = 300;
         float normalisedDepth = depth / maxDepth;
         
-        waterSurface.scatteringColor = Color.Lerp(defaultScatteringColor, deepScatteringColor, normalisedDepth);
+        // waterSurface.scatteringColor = Color.Lerp(defaultScatteringColor, deepScatteringColor, normalisedDepth);
+        currentScatteringColor = Color.Lerp(defaultScatteringColor, deepScatteringColor, normalisedDepth);
+        waterSurface.scatteringColor = currentScatteringColor;
         waterSurface.absorptionDistanceMultiplier = Mathf.Lerp(defaultAbsorptionDistanceMultiplier,maxAbsorptionDistanceMultiplier, normalisedDepth);;
 
 
@@ -252,7 +256,7 @@ public class NitrogenNarcosisController : MonoBehaviour
                         .SetEase(Ease.InBounce);
                     
                     yield return currentTween.WaitForCompletion();
-                    break;
+                    yield break;
                 case 2:
                     Debug.Log("Level 2");
                     
@@ -264,7 +268,7 @@ public class NitrogenNarcosisController : MonoBehaviour
                         .SetLoops(iterations * 2, LoopType.Yoyo) // iterations * 2 because yoyo loop type counts iteration as each direction
                         .SetEase(Ease.InExpo);
                     yield return currentTween.WaitForCompletion();
-                    break;
+                    yield break;
                 case 3:
                     Debug.Log("Level 3");
                     
@@ -279,7 +283,10 @@ public class NitrogenNarcosisController : MonoBehaviour
                         .SetEase(Ease.OutElastic);
 
                     yield return currentTween.WaitForCompletion();
-                    break;
+                    yield break;
+                default:
+                    Debug.LogWarning("Invalid narcotic level");
+                    yield break;
             }
             
         }

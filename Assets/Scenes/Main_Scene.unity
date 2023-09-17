@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1362.5598, g: 1548.3557, b: 2231.428, a: 1}
+  m_IndirectSpecularColor: {r: 1362.5168, g: 1548.3517, b: 2231.4143, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1411,7 +1411,7 @@ Transform:
   m_GameObject: {fileID: 1162150577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 80, y: -200, z: 112.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1436,8 +1436,8 @@ MonoBehaviour:
   narcosisVolume: {fileID: 1733803563}
   minExposureCompensation: -1
   maxExposureCompensation: 1
-  maxAbsorptionDistanceMultiplier: 10
-  deepScatteringColor: {r: 0, g: 0, b: 0, a: 0}
+  maxAbsorptionDistanceMultiplier: 14
+  deepScatteringColor: {r: 0, g: 0.16078432, b: 0.16078432, a: 0}
   defaultAbsorptionDistanceMultiplier: 3
   defaultScatteringColor: {r: 0, g: 0.6666667, b: 0.6666667, a: 0}
   enableCameraFX: 0
@@ -1689,7 +1689,7 @@ Transform:
   m_GameObject: {fileID: 1514544888}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
-  m_LocalPosition: {x: -3.93, y: -0.06780799, z: 9.72}
+  m_LocalPosition: {x: -3.93, y: 0.28186798, z: 9.72}
   m_LocalScale: {x: 2.6705, y: 4.0984163, z: 2.6705}
   m_ConstrainProportionsScale: 0
   m_Children: []
