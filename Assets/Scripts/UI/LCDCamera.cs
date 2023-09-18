@@ -10,21 +10,19 @@ public class LCDCamera : MonoBehaviour
     [SerializeField] private RenderTexture rt;
     private Camera lcdCam;
 
-    [SerializeField] private RawImage img;
+    private HDCameraUI hdCameraUI;
+
 
     private void Awake()
     {
         lcdCam = GetComponent<Camera>();
+        hdCameraUI = GetComponent<HDCameraUI>();
     }
 
 
     private void Start()
     {
         lcdCam.targetTexture = rt;
-    }
-
-    private void Update()
-    {
-        img.color = Random.ColorHSV();
+        hdCameraUI.compositingMode = HDCameraUI.CompositingMode.Manual; // disables auto compositing ie. won't show up on main cam
     }
 }

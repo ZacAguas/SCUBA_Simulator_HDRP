@@ -76,14 +76,14 @@ Material:
     - OffsetLEDY: 0
     - OffsetVideoX: 0
     - OffsetVideoY: 0
-    - TilingLEDX: 30
-    - TilingLEDY: 30
+    - TilingLEDX: 50
+    - TilingLEDY: 50
     - TilingVideoX: 1
     - TilingVideoY: 1
     - Vector1_3ea4ac5985e045fe9bb1473433a925a9: 1
     - Vector1_A78CEBC: 1
     - Vector1_D4BB5679: 1
-    - Vector1_a1f9648bff084cf4959c672e512a732d: 200
+    - Vector1_a1f9648bff084cf4959c672e512a732d: 500
     - _AddPrecomputedVelocity: 0
     - _AlphaCutoffEnable: 0
     - _AlphaDstBlend: 0

@@ -37,11 +37,11 @@ public class TankController : MonoBehaviour
     public enum GasMix
     {
         Air,
-        Nitrox32,
-        Nitrox36,
-        Trimix21_35,
-        Trimix18_45,
-        Trimix10_70
+        EAN32,
+        EAN36,
+        Tri21_35,
+        Tri18_45,
+        Tri10_70
     }
     [SerializeField] private GasMix selectedGasMix;
     public GasMix GetGasMix() => selectedGasMix;
@@ -90,27 +90,27 @@ public class TankController : MonoBehaviour
                 nitrogenPercentage = 0.79f;
                 heliumPercentage = 0f;
                 break;
-            case GasMix.Nitrox32:
+            case GasMix.EAN32:
                 oxygenPercentage = 0.32f;
                 nitrogenPercentage = 0.68f;
                 heliumPercentage = 0f;
                 break;
-            case GasMix.Nitrox36:
+            case GasMix.EAN36:
                 oxygenPercentage = 0.36f;
                 nitrogenPercentage = 0.64f;
                 heliumPercentage = 0f;
                 break;
-            case GasMix.Trimix21_35:
+            case GasMix.Tri21_35:
                 oxygenPercentage = 0.21f;
                 nitrogenPercentage = 0.44f;
                 heliumPercentage = 0.35f;
                 break;
-            case GasMix.Trimix18_45:
+            case GasMix.Tri18_45:
                 oxygenPercentage = 0.18f;
                 nitrogenPercentage = 0.37f;
                 heliumPercentage = 0.45f;
                 break;
-            case GasMix.Trimix10_70:
+            case GasMix.Tri10_70:
                 oxygenPercentage = 0.10f;
                 nitrogenPercentage = 0.2f;
                 heliumPercentage = 0.7f;
