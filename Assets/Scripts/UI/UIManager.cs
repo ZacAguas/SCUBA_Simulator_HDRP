@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private DepthManager depthManager;
     [SerializeField] private TankController tankController;
-    
+    [SerializeField] private Timer timer;
     
     [SerializeField] private Slider bcdSlider;
     [SerializeField] private TextMeshProUGUI depthValue;
@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ascentValue;
     [SerializeField] private TextMeshProUGUI gasMix;
     [SerializeField] private TextMeshProUGUI maxDepthValue;
+    [SerializeField] private TextMeshProUGUI timeValue;
 
     [SerializeField] private float UpdateInterval;
 
@@ -64,6 +65,8 @@ public class UIManager : MonoBehaviour
             }
             ascentValue.text = Mathf.Abs(currentAscentRate).ToString(currentAscentRate < 100 ? "00.0" : "000.0");
 
+
+            timeValue.text = timer.TimeInMMSS();
             yield return interval;
         }
         
