@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private const float waterDensity = 1030; // in kg/m^3
     private const float gravity = 9.81f; // acceleration due to gravity in m/s^2
     // body
-    public float totalMass => bodyMass + equipmentMass;
+    private float totalMass => bodyMass + equipmentMass;
     [SerializeField] private float bodyMass; // in kg
     [SerializeField] private float equipmentMass; // in kg
     private float bodyVolume; // in cubic meters
@@ -114,7 +114,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 swimInput = inputManager.GetSwimInput();
         rb.AddRelativeForce(swimInput * swimSpeed); // relative force applies the force according to local rotation
-
     }
     
     private float CalculateBodyVolume()
