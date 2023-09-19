@@ -12,6 +12,7 @@ public class DepthManager : MonoBehaviour
     private NitrogenNarcosisController nitrogenNarcosisController;
     
     public float Depth { get; private set; }
+    public float MaxDepth => 300f;
     public float PressureAbsolute => (Depth + 10) / 10; // absolute atmospheric pressure ie. 1ATA at 0m, 2ATA at 10m
 
     [field: SerializeField] public float MaxAscentRate { get; private set; } // the max speed the player should ascend at (normally 9/16 m/min)

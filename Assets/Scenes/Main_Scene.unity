@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1362.5851, g: 1548.3966, b: 2231.4631, a: 1}
+  m_IndirectSpecularColor: {r: 1362.5343, g: 1548.3402, b: 2231.4124, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -746,6 +746,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d5d74f2831f446db7ef3f0f5cb95af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  depthManager: {fileID: 1162150580}
+  lcdRenderer: {fileID: 2095562175}
+  defaultLCDIntensity: 500
+  focusedLCDIntensity: 2000
   transitionDuration: 1
   currentLeftTransform: {fileID: 1584701308}
   defaultLeftTransform: {fileID: 545753313}
@@ -2403,7 +2407,7 @@ Transform:
   m_GameObject: {fileID: 1162150577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 70.3, y: 0, z: 123.76}
+  m_LocalPosition: {x: 70.3, y: -12, z: 123.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2975,7 +2979,7 @@ Transform:
   m_GameObject: {fileID: 1514544888}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
-  m_LocalPosition: {x: -3.93, y: -0.31761843, z: 9.72}
+  m_LocalPosition: {x: -3.93, y: 0.45237154, z: 9.72}
   m_LocalScale: {x: 2.6705, y: 4.0984163, z: 2.6705}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3970,7 +3974,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32
   priority: 0
-  compositingMode: 0
+  compositingMode: 1
   compositingMaterial: {fileID: 0}
   compositingMaterialPass: 0
   graphicsFormat: 48
@@ -4949,6 +4953,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2094945281}
   m_CullTransparentMesh: 1
+--- !u!23 &2095562175 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7132580276819905256, guid: d855c19de670a4dfa8886b70e7a2706e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1584701307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2099838677
 GameObject:
   m_ObjectHideFlags: 0

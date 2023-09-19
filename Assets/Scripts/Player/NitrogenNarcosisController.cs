@@ -201,7 +201,7 @@ public class NitrogenNarcosisController : MonoBehaviour
     {
         // interpolate scattering colour darker, absorption distance higher, (exposure compensation?) with depth
         float depth = depthManager.Depth;
-        float maxDepth = 300;
+        float maxDepth = depthManager.MaxDepth;
         float normalisedDepth = depth / maxDepth;
         
         // waterSurface.scatteringColor = Color.Lerp(defaultScatteringColor, deepScatteringColor, normalisedDepth);
