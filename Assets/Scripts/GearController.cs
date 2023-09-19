@@ -7,13 +7,19 @@ using UnityEngine;
 public class GearController : MonoBehaviour
 {
     [SerializeField] private DepthManager depthManager;
+    [SerializeField] private InputManager inputManager;
 
     [SerializeField] private Renderer lcdRenderer;
     private Material lcdMaterial;
     [SerializeField] private float defaultLCDIntensity;
     [SerializeField] private float focusedLCDIntensity;
     
+    // gear sway
+    [SerializeField] private float swayMultiplier;
+    [SerializeField] private float swaySmoothing;
     
+    
+
     // equipment focusing
     private bool isFocusedLeft; // true if player is currently focused on left gear item
     private bool isFocusedRight;
@@ -37,8 +43,24 @@ public class GearController : MonoBehaviour
     private void Update()
     {
         FocusEquipment();
+        SwayGear();
     }
 
+    private void SwayGear()
+    {
+        float swayMultiplierThisFrame = swayMultiplier; // depends on focus
+        if (isFocusedLeft || isFocusedRight)
+            swayMultiplierThisFrame = swayMultiplier / 4; // sway less when focusing
+        
+        Vector2 mouseInput = inputManager.GetMouseInput() * swayMultiplierThisFrame;
+        Quaternion rotationX = Quaternion.AngleAxis(-mouseInput.y, Vector3.right);
+        Quaternion rotationY = Quaternion.AngleAxis(mouseInput.x, Vector3.up);
+        Quaternion targetRotation = rotationX * rotationY;
+        
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, swaySmoothing);
+        
+    }
+    
     private void FocusEquipment()
     {
         // Left click & not currently focused on other side
