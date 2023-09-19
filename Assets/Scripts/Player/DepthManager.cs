@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(TankController))] // for END
 public class DepthManager : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     private TankController tankController;
     private PlayerController playerController;
     private NitrogenNarcosisController nitrogenNarcosisController;
@@ -104,7 +105,9 @@ public class DepthManager : MonoBehaviour
             else
             {
                 nitrogenNarcosisController.NarcosisLevel = 4;
-                // add logic for timer and then killing player
+                
+                gameManager.Die(CauseOfDeath.Depth, Depth, 3, true);
+
             }
             
             if (!playerNarced) // only invoke if not already narced
@@ -117,7 +120,6 @@ public class DepthManager : MonoBehaviour
         }
         else
         {
-            // nitrogenNarcosisController.ExitNarcoticDepth(); // no longer need to stop here, handled in narcosis controller switch statement
             nitrogenNarcosisController.NarcosisLevel = 0;
             playerNarced = false;
         }
