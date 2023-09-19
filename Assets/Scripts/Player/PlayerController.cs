@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private bool clampVerticalLook;
     [SerializeField] private float swimSpeed;
-    
+
     // world
     private const float waterDensity = 1030; // in kg/m^3
     private const float gravity = 9.81f; // acceleration due to gravity in m/s^2
@@ -121,5 +121,7 @@ public class PlayerController : MonoBehaviour
         // note: this is an estimate
         return bodyMass / 1000f; // in cubic meters
     }
+
+    
     
 }

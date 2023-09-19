@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private DepthManager depthManager;
     [SerializeField] private TankController tankController;
+    [SerializeField] private NitrogenNarcosisController nitrogenNarcosisController;
+    
     [SerializeField] private Timer timer;
     
     [SerializeField] private Slider bcdSlider;
@@ -48,22 +50,25 @@ public class UIManager : MonoBehaviour
         while (true)
         {
             bcdSlider.value = playerController.GetInflationMultiplier();
-            depthValue.text = depthManager.Depth.ToString(depthManager.Depth < 100 ? "00.0" : "000.0");
-
-
-            float currentAscentRate = depthManager.CurrentAscentRate;
-            float maxAscentRate = depthManager.MaxAscentRate;
-            ascentValue.color = Color.white;
-
-            if (currentAscentRate < 0) // descending
-                ascentTitle.text = "DESC:";
-            else // ascending
+            
+            // depth value colour
+            switch (nitrogenNarcosisController.NarcosisLevel)
             {
-                ascentTitle.text = "ASCN:";
-                if (currentAscentRate > maxAscentRate) // ascending too quickly
-                    ascentValue.color = Color.red;
+                case 2:
+                case 3:
+                    depthValue.color = Color.yellow;
+                    break;
+                case 4: // player past MOD
+                    depthValue.color = Color.red;
+                    break;
+                default: // player is not narced/slightly narced
+                    depthValue.color = Color.white;
+                    break;
             }
-            ascentValue.text = Mathf.Abs(currentAscentRate).ToString(currentAscentRate < 100 ? "00.0" : "000.0");
+            
+            depthValue.text = depthManager.Depth.ToString(depthManager.Depth < 100 ? "00.0" : "000.0");
+            
+            UpdateAscentRate();
 
 
             timeValue.text = timer.TimeInMMSS();
@@ -71,5 +76,23 @@ public class UIManager : MonoBehaviour
         }
         
         
+    }
+
+    private void UpdateAscentRate()
+    {
+        
+        float currentAscentRate = depthManager.CurrentAscentRate;
+        float maxAscentRate = depthManager.MaxAscentRate;
+        ascentValue.color = Color.white;
+
+        if (currentAscentRate < 0) // descending
+            ascentTitle.text = "DESC:";
+        else // ascending
+        {
+            ascentTitle.text = "ASCN:";
+            if (currentAscentRate > maxAscentRate) // ascending too quickly
+                ascentValue.color = Color.red;
+        }
+        ascentValue.text = Mathf.Abs(currentAscentRate).ToString(currentAscentRate < 100 ? "00.0" : "000.0");
     }
 }
