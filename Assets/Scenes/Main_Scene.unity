@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1362.5266, g: 1548.3402, b: 2231.4124, a: 1}
+  m_IndirectSpecularColor: {r: 1362.5343, g: 1548.3402, b: 2231.4124, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1172,7 +1172,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &446888575
 MonoBehaviour:
@@ -1194,7 +1194,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'asdasdasdasdasd asd asd asd asda sda sdasd asd asd asd '
+  m_text: You were unable to surface in time and had your last breath at {intDepth}m
+    after {minutes} minutes and {seconds} seconds. Your body was later recovered.
+    It is unclear whether you were ever returned to your family
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1227,7 +1229,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 32
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -2052,7 +2054,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -3458,7 +3460,7 @@ Transform:
   m_GameObject: {fileID: 1514544888}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
-  m_LocalPosition: {x: -3.93, y: 0.016521372, z: 9.72}
+  m_LocalPosition: {x: -3.93, y: 0.63288844, z: 9.72}
   m_LocalScale: {x: 2.6705, y: 4.0984163, z: 2.6705}
   m_ConstrainProportionsScale: 0
   m_Children: []

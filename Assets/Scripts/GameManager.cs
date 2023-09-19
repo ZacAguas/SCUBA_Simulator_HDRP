@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -56,6 +57,37 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Die());
     }
 
+    private string GenerateDescription(string minutes, string seconds)
+    {
+        string intDepth = Mathf.RoundToInt(this.depth).ToString();
+        string description = "";
+        // $"cause of death: {causeOfDeath} after {minutes} minutes, {seconds} seconds at {(int)depth}m";
+
+        switch (causeOfDeath)
+        {
+            case CauseOfDeath.Depth:
+                description =
+                    $"You convulsed and died due to oxygen toxicity at {intDepth}m after {minutes} minutes and {seconds} seconds. " +
+                    "Your body will not be recovered.";
+                break;
+            case CauseOfDeath.AscentRate:
+                description =
+                    $"You surfaced too quickly after {minutes} minutes and {seconds} seconds and suffered severe decompression sickness " +
+                    "where you ultimately lost consciousness and drowned. You were not revived.";
+                break;
+            case CauseOfDeath.Refusal:
+                description = $"You refused to participate and as a result were purged from the recovery team. Your family still wait for you.";
+                break;
+            case CauseOfDeath.OutOfAir:
+                description =
+                    $"You were unable to surface in time and had your last breath at {intDepth}m after {minutes} minutes " +
+                    $"and {seconds} seconds. Your body was later recovered. It is unclear whether you were ever returned to your family.";
+                break;
+        }
+
+        return description;
+    }
+
     private IEnumerator Die()
     {
         isDying = true;
@@ -88,8 +120,8 @@ public class GameManager : MonoBehaviour
         // player is dead
         string minutes = timer.Minutes.ToString();
         string seconds = timer.Seconds.ToString();
-        string description =
-            $"cause of death: {causeOfDeath} after {minutes} minutes, {seconds} seconds at {(int)depth}m";
+        string description = GenerateDescription(minutes, seconds);
+            
         descriptionText.text = description; 
         
         deathUI.SetActive(true);
@@ -100,8 +132,9 @@ public class GameManager : MonoBehaviour
         tween = descriptionCanvasGroup.DOFade(1, textFadeDuration).SetDelay(.5f);
         yield return tween.WaitForCompletion();
 
-
         // end game logic
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("Main_Scene");
     }
 }
 
