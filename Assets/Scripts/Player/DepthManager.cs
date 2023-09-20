@@ -105,7 +105,7 @@ public class DepthManager : MonoBehaviour
             else
             {
                 nitrogenNarcosisController.NarcosisLevel = 4;
-                gameManager.Die(CauseOfDeath.Depth, Depth, 3, true);
+                gameManager.Die(CauseOfDeath.Depth, 3, true);
             }
             
             if (!playerNarced) // only invoke if not already narced

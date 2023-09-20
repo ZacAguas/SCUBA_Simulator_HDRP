@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     private PlayerController playerController;
     private DepthManager depthManager;
     private InputManager inputManager; // for checking if inflating
@@ -130,8 +131,8 @@ public class TankController : MonoBehaviour
 
         if (!isOutOfAir && CurrentTankPressure == 0) // we are out of air for the first time
         {
-            onOutOfAir.Invoke();
             isOutOfAir = true;
+            gameManager.Die(CauseOfDeath.OutOfAir, 5, false);
         }
     }
     private void UpdateTankPressure()

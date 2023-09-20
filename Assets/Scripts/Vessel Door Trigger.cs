@@ -20,8 +20,7 @@ public class VesselDoorTrigger : MonoBehaviour
         }
         
         // timer has finished
-        gameManager.Die(CauseOfDeath.Refusal, 0, 3, false);
-        
+        gameManager.Die(CauseOfDeath.Refusal, 3, false);
     }
 
     private void OnTriggerEnter(Collider other)

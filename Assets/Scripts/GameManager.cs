@@ -45,15 +45,15 @@ public class GameManager : MonoBehaviour
         descriptionCanvasGroup.alpha = 0;
     }
 
-    public void Die(CauseOfDeath causeOfDeath, float depth, float waitSeconds, bool checkAfterWait)
+    public void Die(CauseOfDeath causeOfDeath, float waitSeconds, bool checkAfterWait)
     {
-        if (isDying) return; // only do anything if player is isn't
+        if (isDying) return; // only do anything if player isn't already dying
         
         // assign values
         this.causeOfDeath = causeOfDeath;
-        this.depth = depth;
         this.waitSeconds = waitSeconds;
         this.checkAfterWait = checkAfterWait;
+        depth = depthManager.Depth;
         StartCoroutine(Die());
     }
 
@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
     {
         string intDepth = Mathf.RoundToInt(this.depth).ToString();
         string description = "";
-        // $"cause of death: {causeOfDeath} after {minutes} minutes, {seconds} seconds at {(int)depth}m";
 
         switch (causeOfDeath)
         {
