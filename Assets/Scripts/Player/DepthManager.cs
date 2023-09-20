@@ -111,8 +111,6 @@ public class DepthManager : MonoBehaviour
             if (!playerNarced) // only invoke if not already narced
             {
                 nitrogenNarcosisController.EnterNarcoticDepth();
-                // onBecomeNarced.Invoke(); // do I need to check if this is null?
-                Debug.Log("invoke narced event");
             }
             playerNarced = true;
         }

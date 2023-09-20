@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public float TimeInSeconds => timeInSeconds;
     private float timeInSeconds;
     public int Minutes => Mathf.FloorToInt(timeInSeconds / 60);
     public int Seconds => Mathf.FloorToInt(timeInSeconds % 60);
