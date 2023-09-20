@@ -91,7 +91,8 @@ public class PlayerController : MonoBehaviour
         if (clampVerticalLook)
             xMouseRotation = Mathf.Clamp(xMouseRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xMouseRotation, yMouseRotation, 0);
+        // transform.localRotation = Quaternion.Euler(xMouseRotation, yMouseRotation, 0);
+        rb.MoveRotation(Quaternion.Euler(xMouseRotation, yMouseRotation, 0));
     }
 
     private void AdjustBCD()
@@ -113,9 +114,10 @@ public class PlayerController : MonoBehaviour
     private void SwimMovement()
     {
         Vector3 swimInput = inputManager.GetSwimInput();
+        
         rb.AddRelativeForce(swimInput * swimSpeed); // relative force applies the force according to local rotation
     }
-    
+
     private float CalculateBodyVolume()
     {
         // note: this is an estimate

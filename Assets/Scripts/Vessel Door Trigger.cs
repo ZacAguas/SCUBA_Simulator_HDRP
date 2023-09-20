@@ -7,7 +7,6 @@ public class VesselDoorTrigger : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     
-    private bool playerInsideTrigger;
     private float currentTime = 0;
     [SerializeField] private float timeUntilRefusal;
 
@@ -37,7 +36,6 @@ public class VesselDoorTrigger : MonoBehaviour
         // reset timer
         if (!other.CompareTag("Player")) return;
         
-        playerInsideTrigger = false;
         StopCoroutine(Tick());
         currentTime = 0;
     }
